@@ -2,27 +2,50 @@ package example.codeclan.com.suru;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView = (ListView) findViewById(R.id.list_suru);
+
+
+        ArrayList<String> alltasks = SharedPreferencesManager.getTasks(this);
+        TaskAdaptor taskAdaptor = new TaskAdaptor(this, alltasks);
+
+        listView.setAdapter(taskAdaptor);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.suru_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    public void updateList() {
+        ArrayList<String> alltasks = SharedPreferencesManager.getTasks(this);
+        TaskAdaptor taskAdaptor = new TaskAdaptor(this, alltasks);
+
+        listView.setAdapter(taskAdaptor);
     }
 
     @Override
@@ -37,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String task = String.valueOf(taskEditText.getText());
+                                SharedPreferencesManager.addTask(MainActivity.this, task);
+                                MainActivity.this.updateList();
                                 Log.d(TAG, "Added Task: " + task);
                             }
                         })
