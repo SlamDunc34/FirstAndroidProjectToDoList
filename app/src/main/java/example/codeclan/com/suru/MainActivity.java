@@ -2,12 +2,14 @@ package example.codeclan.com.suru;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -75,5 +77,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void onDeleteButtonClicked(View view){
+        ArrayList<String> taskList = SharedPreferencesManager.getTasks(this);
+
+      //  Intent intent = getIntent();
+      //  Bundle extras = intent.getExtras();
+
+        String task = (String) view.getTag();
+
+        taskList.remove(task);
+
+        SharedPreferencesManager.setAllTask(this, taskList);
+
+        updateList();
     }
 }

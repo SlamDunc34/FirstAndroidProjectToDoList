@@ -49,4 +49,17 @@ public class SharedPreferencesManager {
         editor.putString("tasks", tasksListAsAString);
         editor.apply();
     }
+
+    public static void setAllTask(Context context, ArrayList<String> taskList) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Gson gson = new Gson();
+
+        String tasksListAsAString = gson.toJson(taskList);
+
+        editor.putString("tasks", tasksListAsAString);
+        editor.apply();
+    }
 }

@@ -31,6 +31,8 @@ public class TaskAdaptor extends ArrayAdapter<String> {
 
         textView.setText(task);
 
+        item.findViewById(R.id.task_delete).setTag(task);
+
         return item;
     }
 }
