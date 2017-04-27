@@ -52,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
             case R.id.action_add_task:
+
                 final EditText taskEditText = new EditText(this);
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new task")
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
+
                 return true;
 
             default:
@@ -81,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onDeleteButtonClicked(View view){
         ArrayList<String> taskList = SharedPreferencesManager.getTasks(this);
-
-      //  Intent intent = getIntent();
-      //  Bundle extras = intent.getExtras();
 
         String task = (String) view.getTag();
 
